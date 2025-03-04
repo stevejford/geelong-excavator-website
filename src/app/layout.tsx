@@ -13,6 +13,7 @@ const inter = Inter({
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: '#f97316',
 };
 
 export const metadata: Metadata = {
@@ -61,6 +62,7 @@ export const metadata: Metadata = {
   },
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -68,10 +70,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <head>
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#f97316" />
-      </head>
       <body className="flex flex-col min-h-screen">
         <Header />
         <main className="flex-grow">

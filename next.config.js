@@ -7,19 +7,14 @@ const nextConfig = {
   experimental: {
     // Enable Turbo for faster builds and page loads
     turbo: {
-      loaders: {
+      rules: {
         // Add loaders for specific file types if needed
-        '.svg': ['@svgr/webpack'],
+        '*.svg': ['@svgr/webpack'],
       },
     },
-    // Enable server components caching
-    serverComponentsExternalPackages: [],
     // Enable optimistic updates
     optimisticClientCache: true,
   },
-  
-  // Enable SWC minification for faster builds
-  swcMinify: true,
   
   // Configure caching behavior
   onDemandEntries: {
@@ -49,39 +44,6 @@ const nextConfig = {
   
   // Enable static page generation optimization
   output: 'standalone',
-  
-  // Configure HTTP caching headers
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=86400',
-          },
-        ],
-      },
-      {
-        source: '/images/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=604800',
-          },
-        ],
-      },
-      {
-        source: '/_next/image/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=604800',
-          },
-        ],
-      },
-    ];
-  },
 }
 
 module.exports = nextConfig
