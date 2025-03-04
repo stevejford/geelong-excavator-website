@@ -223,7 +223,7 @@ export default function ServiceAreaPage({ params }: Props) {
           <div className="bg-primary rounded-lg p-8 md:p-12 text-white text-center">
             <h2 className="text-3xl font-bold mb-4 text-white">Ready to Start Your {formattedArea} Project?</h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto">
-              Contact us today to discuss your equipment needs and get a competitive quote for your {formattedArea} project.
+                  Contact us today to discuss your equipment needs and get a competitive quote for your {formattedArea} project.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link href="/book-now" className="btn-primary bg-white text-primary hover:bg-gray-100">

@@ -4,10 +4,10 @@ import { useState } from 'react';
 
 interface PostcodeCheckerProps {
   serviceablePostcodes: string[];
-  areaName: string;
+  areaName?: string; // Make areaName optional since it's not used
 }
 
-export default function PostcodeChecker({ serviceablePostcodes, areaName }: PostcodeCheckerProps) {
+export default function PostcodeChecker({ serviceablePostcodes }: PostcodeCheckerProps) {
   const [result, setResult] = useState<string | null>(null);
   const [resultType, setResultType] = useState<'success' | 'error' | 'warning' | null>(null);
 

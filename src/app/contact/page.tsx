@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
+// Removing unused import
 
 export const metadata: Metadata = {
   title: 'Contact Us | Geelong Excavator Hire',

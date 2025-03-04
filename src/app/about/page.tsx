@@ -88,7 +88,7 @@ export default function AboutPage() {
                 ))}
               </div>
               <p className="text-gray-700 mb-4">
-                "Excellent company to deal with. New equipment, great service and reasonable rates. Would definitely use them again."
+                &quot;Excellent company to deal with. New equipment, great service and reasonable rates. Would definitely use them again.&quot;
               </p>
               <div className="flex items-center">
                 <div className="font-medium">Josh Kent</div>
@@ -107,7 +107,7 @@ export default function AboutPage() {
                 ))}
               </div>
               <p className="text-gray-700 mb-4">
-                "Long time customer here, always good service and quality machines to hire."
+                &quot;Long time customer here, always good service and quality machines to hire.&quot;
               </p>
               <div className="flex items-center">
                 <div className="font-medium">Andrew Dawes</div>
@@ -126,7 +126,7 @@ export default function AboutPage() {
                 ))}
               </div>
               <p className="text-gray-700 mb-4">
-                "Awesome new equipment, flexible hours and great company to deal with. Highly recommend."
+                &quot;Awesome new equipment, flexible hours and great company to deal with. Highly recommend.&quot;
               </p>
               <div className="flex items-center">
                 <div className="font-medium">Seth Binion</div>
