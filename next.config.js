@@ -15,8 +15,6 @@ const nextConfig = {
   images: {
     // Optimize images
     formats: ['image/avif', 'image/webp'],
-    // Reduce quality to improve load time
-    quality: 80,
     // Disable remote patterns if not needed
     remotePatterns: [],
     // Minimize image size in development
