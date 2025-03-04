@@ -82,7 +82,7 @@ export default function ServiceAreaPage({ params }: Props) {
               </p>
               
               <p className="text-gray-700 text-lg leading-relaxed">
-                Whether you're undertaking a major construction project, landscaping your property, or need specialized equipment for a specific task, our team is here to help you select the right machinery for your needs in {formattedArea}.
+                Whether you&apos;re undertaking a major construction project, landscaping your property, or need specialized equipment for a specific task, our team is here to help you select the right machinery for your needs in {formattedArea}.
               </p>
             </div>
             
@@ -209,7 +209,7 @@ export default function ServiceAreaPage({ params }: Props) {
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <h3 className="text-lg font-medium mb-2">What if I need equipment for longer than expected?</h3>
                 <p className="text-gray-700">
-                  If you need to extend your hire period, simply contact us as soon as possible. We'll do our best to accommodate your request, subject to availability. Additional charges will apply based on our standard rates.
+                  If you need to extend your hire period, simply contact us as soon as possible. We&apos;ll do our best to accommodate your request, subject to availability. Additional charges will apply based on our standard rates.
                 </p>
               </div>
             </div>

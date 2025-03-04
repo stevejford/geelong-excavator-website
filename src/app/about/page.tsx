@@ -73,7 +73,7 @@ export default function AboutPage() {
               <span className="ml-2 text-gray-600">5.0 from 6 reviews</span>
             </div>
             <p className="text-gray-700 max-w-3xl mx-auto">
-              Don't just take our word for it. Here's what our customers have to say about our service and equipment.
+              Don&apos;t just take our word for it. Here&apos;s what our customers have to say about our service and equipment.
             </p>
           </div>
           

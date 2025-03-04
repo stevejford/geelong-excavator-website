@@ -38,7 +38,7 @@ export default function BookNowPage() {
           <div className="max-w-3xl mx-auto">
             <h2 className="mb-8 text-center">Equipment Booking</h2>
             <p className="text-gray-700 mb-12 text-center">
-              Fill out the form below to book your equipment. We'll confirm availability and provide a quote based on your requirements.
+              Fill out the form below to book your equipment. We&apos;ll confirm availability and provide a quote based on your requirements.
             </p>
             
             <form className="bg-white p-8 rounded-lg shadow-md space-y-6">
@@ -206,7 +206,7 @@ export default function BookNowPage() {
                 <div>
                   <h3 className="text-lg font-semibold mb-2">Booking Process</h3>
                   <p className="text-gray-700">
-                    After submitting your booking request, our team will review it and confirm equipment availability. We'll then contact you with a quote and to finalize the details of your rental.
+                    After submitting your booking request, our team will review it and confirm equipment availability. We&apos;ll then contact you with a quote and to finalize the details of your rental.
                   </p>
                 </div>
                 
