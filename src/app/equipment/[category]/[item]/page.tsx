@@ -339,7 +339,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function ItemPage({ params }: Props) {
+export default function ItemPage({ params }: Props) {
   const category = params.category;
   const item = params.item;
   
