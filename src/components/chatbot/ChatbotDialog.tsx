@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useChat } from './ChatContext';
 import ChatMessage from './ChatMessage';
-import ChatbotEquipmentSelector from './ChatbotEquipmentSelector';
 
 const ChatbotDialog: React.FC = () => {
   const { 
@@ -119,12 +118,7 @@ const ChatbotDialog: React.FC = () => {
           </div>
         )}
         
-        {/* Show equipment selector if in equipment selection step and no equipment is selected yet */}
-        {bookingStep === 'equipment-selection' && !bookingData.equipment && (
-          <div className="mt-4">
-            <ChatbotEquipmentSelector />
-          </div>
-        )}
+        {/* Equipment selection is now handled by the chatbot AI */}
         
         {/* Invisible element to scroll to */}
         <div ref={messagesEndRef} />
