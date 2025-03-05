@@ -1,0 +1,32 @@
+[build]
+  command = "npm run build && cp public/service-worker.js .next/"
+  publish = ".next"
+
+[build.environment]
+  NETLIFY_NEXT_PLUGIN_SKIP = "false"
+  NODE_VERSION = "18"
+  # Note: Do not put actual API keys here. Add them in the Netlify dashboard.
+  # These are just placeholders to indicate which variables are needed.
+  ANTHROPIC_API_KEY = "placeholder"
+  RESEND_API_KEY = "placeholder"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Cache control for static assets
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/_next/image/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Service worker redirects have been removed to fix console errors
