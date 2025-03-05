@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/images/logo1.png",
+        url: "/images/logo1.webp",
         width: 800,
         height: 600,
         alt: "Geelong Excavator Hire Logo",

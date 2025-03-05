@@ -15,7 +15,7 @@ export default function BookNowPage() {
       <section className="relative h-[300px] flex items-center">
         <div className="absolute inset-0">
           <Image
-            src="/images/rocks/pexels-olgalioncat-7245520.jpg"
+            src="/images/rocks/pexels-olgalioncat-7245520.webp"
             alt="Book Equipment"
             fill
             className="object-cover brightness-50"

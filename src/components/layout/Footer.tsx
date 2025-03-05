@@ -32,7 +32,7 @@ const Footer = () => {
           {/* Company Info */}
           <div className="space-y-4">
             <Image
-              src="/images/logo2.png"
+              src="/images/logo2.webp"
               alt="Geelong Excavator Hire"
               width={200}
               height={60}

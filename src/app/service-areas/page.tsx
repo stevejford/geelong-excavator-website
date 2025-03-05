@@ -24,7 +24,7 @@ export default function ServiceAreasPage() {
       <section className="relative h-[300px] flex items-center">
         <div className="absolute inset-0">
           <Image
-            src="/images/rocks/pexels-mikebirdy-383559.jpg"
+            src="/images/rocks/pexels-mikebirdy-383559.webp"
             alt="Service Areas"
             fill
             className="object-cover brightness-50"

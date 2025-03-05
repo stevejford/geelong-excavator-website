@@ -14,7 +14,7 @@ export default function ContactPage() {
       <section className="relative h-[300px] flex items-center">
         <div className="absolute inset-0">
           <Image
-            src="/images/rocks/pexels-magda-ehlers-pexels-789117.jpg"
+            src="/images/rocks/pexels-magda-ehlers-pexels-789117.webp"
             alt="Contact Geelong Excavator Hire"
             fill
             className="object-cover brightness-50"

@@ -14,7 +14,7 @@ export default function AboutPage() {
       <section className="relative h-[300px] flex items-center">
         <div className="absolute inset-0">
           <Image
-            src="/images/rocks/pexels-adam-b-1620746-12231410.jpg"
+            src="/images/rocks/pexels-adam-b-1620746-12231410.webp"
             alt="About Geelong Excavator Hire"
             fill
             className="object-cover brightness-50"
@@ -50,7 +50,7 @@ export default function AboutPage() {
             </div>
             <div className="relative h-[400px] rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="/images/excavators/5t Kubota Excavator.png"
+                src="/images/excavators/5t Kubota Excavator.webp"
                 alt="Excavator in action"
                 fill
                 className="object-cover"

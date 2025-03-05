@@ -11,49 +11,49 @@ export const metadata: Metadata = {
 const categories = [
   {
     title: 'Excavators',
-    imagePath: '/images/excavators/5t Kubota Excavator.png',
+    imagePath: '/images/excavators/5t Kubota Excavator.webp',
     description: 'Wide range of excavators from 1.7t to 13t for all your earthmoving needs.',
     href: '/equipment/excavators'
   },
   {
     title: 'Skid Steer Loaders',
-    imagePath: '/images/skid-steer-loaders/Kubota svl65 bobcat posi.png',
+    imagePath: '/images/skid-steer-loaders/Kubota svl65 bobcat posi.webp',
     description: 'Versatile skid steer loaders perfect for construction and landscaping projects.',
     href: '/equipment/skid-steer-loaders'
   },
   {
     title: 'Attachments',
-    imagePath: '/images/attachments/Hydraulic Grab 12-14t.jpeg',
+    imagePath: '/images/attachments/Hydraulic Grab 12-14t.webp',
     description: 'Various attachments to enhance the capabilities of your hired equipment.',
     href: '/equipment/attachments'
   },
   {
     title: 'Compaction Equipment',
-    imagePath: '/images/compaction-equipment/Bomag 100.png',
+    imagePath: '/images/compaction-equipment/Bomag 100.webp',
     description: 'Professional compaction equipment for soil and asphalt compaction.',
     href: '/equipment/compaction-equipment'
   },
   {
     title: 'Concrete Equipment',
-    imagePath: '/images/concrete/Trowelling Machine.png',
+    imagePath: '/images/concrete/Trowelling Machine.webp',
     description: 'Specialized equipment for concrete work and finishing.',
     href: '/equipment/concrete-equipment'
   },
   {
     title: 'Tipper Trucks',
-    imagePath: '/images/tipper-trucks/Car licence tipper.jpg',
+    imagePath: '/images/tipper-trucks/Car licence tipper.webp',
     description: 'Reliable tipper trucks for efficient material transport.',
     href: '/equipment/tipper-trucks'
   },
   {
     title: 'Non-Destructive Excavation',
-    imagePath: '/images/non-destructive-excavation/hydroexcavationtrailer.png',
+    imagePath: '/images/non-destructive-excavation/hydroexcavationtrailer.webp',
     description: 'Specialized equipment for non-destructive digging and excavation.',
     href: '/equipment/non-destructive-excavation'
   },
   {
     title: 'Augers & Rock Breakers',
-    imagePath: '/images/augers&rock-breakers/Auger 300mm (Drill piece only).jpeg',
+    imagePath: '/images/augers&rock-breakers/Auger 300mm (Drill piece only).webp',
     description: 'Powerful augers and rock breakers for drilling and breaking tough materials.',
     href: '/equipment/augers-rock-breakers'
   }
@@ -66,7 +66,7 @@ export default function EquipmentPage() {
       <section className="relative h-[300px] flex items-center">
         <div className="absolute inset-0">
           <Image
-            src="/images/rocks/pexels-johnnymckane-237950.jpg"
+            src="/images/rocks/pexels-johnnymckane-237950.webp"
             alt="Equipment for hire"
             fill
             className="object-cover brightness-50"

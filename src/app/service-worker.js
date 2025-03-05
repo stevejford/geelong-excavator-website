@@ -12,8 +12,8 @@ const PRECACHE_URLS = [
   '/contact',
   '/book-now',
   '/service-areas',
-  '/images/logo1.png',
-  '/images/logo2.png',
+  '/images/logo1.webp',
+  '/images/logo2.webp',
 ];
 
 // Install event - pre-cache important resources
@@ -74,8 +74,8 @@ self.addEventListener('push', (event) => {
   const title = 'Geelong Excavator Hire';
   const options = {
     body: event.data.text(),
-    icon: '/images/logo1.png',
-    badge: '/images/logo2.png'
+    icon: '/images/logo1.webp',
+    badge: '/images/logo2.webp'
   };
 
   event.waitUntil(self.registration.showNotification(title, options));

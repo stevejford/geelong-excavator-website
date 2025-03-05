@@ -15,7 +15,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center">
             <Image
-              src="/images/logo2.png"
+              src="/images/logo2.webp"
               alt="Geelong Excavator Hire"
               width={280}
               height={84}

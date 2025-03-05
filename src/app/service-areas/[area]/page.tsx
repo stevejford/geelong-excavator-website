@@ -49,7 +49,7 @@ export default function ServiceAreaPage({ params }: Props) {
       <section className="relative h-[300px] flex items-center">
         <div className="absolute inset-0">
           <Image
-            src="/images/rocks/pexels-mikebirdy-383559.jpg"
+            src="/images/rocks/pexels-mikebirdy-383559.webp"
             alt={`Equipment Hire in ${formattedArea}`}
             fill
             className="object-cover brightness-50"
