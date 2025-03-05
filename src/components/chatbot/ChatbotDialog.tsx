@@ -65,50 +65,39 @@ const ChatbotDialog: React.FC = () => {
     ">
       {/* Header */}
       <div className="bg-yellow-400 p-4 rounded-t-lg flex justify-between items-center">
-        <h3 className="font-bold text-gray-800">Equipment Assistant</h3>
-        <div className="flex items-center space-x-2">
-          <button 
-            onClick={startNewChat}
-            aria-label="Start new chat"
-            className="text-gray-800 hover:text-gray-600 transition-colors bg-white rounded-full p-1"
-            title="Start new chat"
-          >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className="h-5 w-5" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M12 4v16m8-8H4" 
-              />
-            </svg>
-          </button>
-          <button 
-            onClick={handleClose}
-            aria-label="Close chat"
-            className="text-gray-800 hover:text-gray-600 transition-colors"
-          >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className="h-5 w-5" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M6 18L18 6M6 6l12 12" 
-              />
-            </svg>
-          </button>
+        <div className="flex items-center">
+          {/* Avatar */}
+          <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center mr-3 overflow-hidden">
+            <img 
+              src="/images/logo2.webp" 
+              alt="Geelong Excavator Hire" 
+              className="w-8 h-8 object-contain"
+            />
+          </div>
+          {/* Title - nowrap to keep on one line */}
+          <h3 className="font-bold text-gray-800 whitespace-nowrap">Equipment Assistant</h3>
         </div>
+        <button 
+          onClick={handleClose}
+          aria-label="Close chat"
+          className="flex items-center text-gray-800 hover:text-gray-600 transition-colors bg-white rounded-lg px-3 py-1"
+        >
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            className="h-4 w-4 mr-1" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M6 18L18 6M6 6l12 12" 
+            />
+          </svg>
+          <span className="text-sm">Close</span>
+        </button>
       </div>
       
       {/* Messages */}
