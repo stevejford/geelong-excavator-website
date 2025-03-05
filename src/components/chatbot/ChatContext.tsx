@@ -81,45 +81,93 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   // Initialize chat on first load
   useEffect(() => {
-    // Check if the user has closed the chatbot before
-    const chatbotClosed = localStorage.getItem('chatbotClosed') === 'true';
-    
-    // Check if chat has expired (older than 24 hours)
-    const chatTimestamp = localStorage.getItem('chatTimestamp');
-    const now = new Date().getTime();
-    const isExpired = !chatTimestamp || (now - parseInt(chatTimestamp)) > 24 * 60 * 60 * 1000;
-    
-    if (isExpired) {
-      // If chat is expired, start a new chat
-      startNewChat();
-    } else {
-      // Load saved messages from localStorage
-      const savedMessages = localStorage.getItem('chatMessages');
-      if (savedMessages) {
-        setMessages(JSON.parse(savedMessages));
+    try {
+      console.log('ChatContext: Initializing chat');
+      
+      // Check if the user has closed the chatbot before
+      const chatbotClosed = localStorage.getItem('chatbotClosed') === 'true';
+      console.log('ChatContext: chatbotClosed =', chatbotClosed);
+      
+      // Check if chat has expired (older than 24 hours)
+      const chatTimestamp = localStorage.getItem('chatTimestamp');
+      const now = new Date().getTime();
+      const isExpired = !chatTimestamp || (now - parseInt(chatTimestamp)) > 24 * 60 * 60 * 1000;
+      console.log('ChatContext: isExpired =', isExpired);
+      
+      if (isExpired) {
+        // If chat is expired, start a new chat
+        console.log('ChatContext: Starting new chat due to expiration');
+        const initialMessages: ChatMessage[] = [
+          {
+            role: 'assistant',
+            content: 'Hi there! 👋 I\'m your equipment assistant. I can help you find the right equipment for your project and assist with bookings. How can I help you today?'
+          }
+        ];
+        setMessages(initialMessages);
+        localStorage.setItem('chatMessages', JSON.stringify(initialMessages));
+        
+        // Clear booking data
+        setBookingData({});
+        localStorage.removeItem('chatbotBookingData');
+        
+        // Reset booking step
+        setBookingStep('initial');
+        localStorage.setItem('chatbotBookingStep', 'initial');
+        
+        // Set new timestamp
+        localStorage.setItem('chatTimestamp', now.toString());
+      } else {
+        // Load saved messages from localStorage
+        console.log('ChatContext: Loading saved chat data');
+        const savedMessages = localStorage.getItem('chatMessages');
+        if (savedMessages) {
+          setMessages(JSON.parse(savedMessages));
+        } else {
+          // If no messages, set default welcome message
+          console.log('ChatContext: No saved messages, setting default');
+          const defaultMessages: ChatMessage[] = [
+            {
+              role: 'assistant',
+              content: 'Hi there! 👋 I\'m your equipment assistant. I can help you find the right equipment for your project and assist with bookings. How can I help you today?'
+            }
+          ];
+          setMessages(defaultMessages);
+          localStorage.setItem('chatMessages', JSON.stringify(defaultMessages));
+        }
+        
+        // Load saved booking data
+        const savedBookingData = localStorage.getItem('chatbotBookingData');
+        if (savedBookingData) {
+          setBookingData(JSON.parse(savedBookingData));
+        }
+        
+        // Load saved booking step
+        const savedBookingStep = localStorage.getItem('chatbotBookingStep');
+        if (savedBookingStep) {
+          setBookingStep(savedBookingStep);
+        }
       }
       
-      // Load saved booking data
-      const savedBookingData = localStorage.getItem('chatbotBookingData');
-      if (savedBookingData) {
-        setBookingData(JSON.parse(savedBookingData));
+      // Open the chatbot automatically on first visit
+      if (!chatbotClosed) {
+        console.log('ChatContext: Opening chatbot automatically');
+        // Delay opening to allow page to load first
+        const timer = setTimeout(() => {
+          setIsOpen(true);
+        }, 2000);
+        
+        return () => clearTimeout(timer);
       }
-      
-      // Load saved booking step
-      const savedBookingStep = localStorage.getItem('chatbotBookingStep');
-      if (savedBookingStep) {
-        setBookingStep(savedBookingStep);
-      }
-    }
-    
-    // Open the chatbot automatically on first visit
-    if (!chatbotClosed) {
-      // Delay opening to allow page to load first
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-      }, 2000);
-      
-      return () => clearTimeout(timer);
+    } catch (error) {
+      console.error('ChatContext: Error initializing chat', error);
+      // Ensure we have at least a welcome message
+      const fallbackMessages: ChatMessage[] = [
+        {
+          role: 'assistant',
+          content: 'Hi there! 👋 I\'m your equipment assistant. I can help you find the right equipment for your project and assist with bookings. How can I help you today?'
+        }
+      ];
+      setMessages(fallbackMessages);
     }
   }, []);
 
@@ -176,6 +224,8 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setIsLoading(true);
     
     try {
+      console.log('ChatContext: Sending message to API');
+      
       // Send the message to the API
       const response = await fetch('/api/chatbot', {
         method: 'POST',
@@ -189,11 +239,15 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }),
       });
       
+      console.log('ChatContext: API response status:', response.status);
+      
       if (!response.ok) {
-        throw new Error('Failed to send message');
+        console.error('ChatContext: API error response:', response.status, response.statusText);
+        throw new Error(`Failed to send message: ${response.status} ${response.statusText}`);
       }
       
       const data = await response.json();
+      console.log('ChatContext: API response data received');
       
       // Add assistant response to the chat
       addMessage({ role: 'assistant', content: data.message });
@@ -208,10 +262,21 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         updateBookingData(data.bookingData);
       }
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error('ChatContext: Error sending message:', error);
+      
+      // Provide a more helpful error message based on the environment
+      const isProduction = window.location.hostname !== 'localhost';
+      let errorMessage = 'Sorry, I encountered an error. Please try again or contact us directly at info@gehire.net or 0408 851 525.';
+      
+      if (isProduction) {
+        errorMessage = 'Sorry, the chatbot is currently experiencing technical difficulties. ' +
+          'This is likely because the API keys have not been properly configured in the deployment environment. ' +
+          'Please contact us directly at info@gehire.net or 0408 851 525 to speak with our team.';
+      }
+      
       addMessage({
         role: 'assistant',
-        content: 'Sorry, I encountered an error. Please try again or contact us directly at info@gehire.net or 0408 851 525.'
+        content: errorMessage
       });
     } finally {
       setIsLoading(false);
