@@ -281,6 +281,16 @@ async function sendBookingEmail(bookingData: any): Promise<boolean> {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if API keys are configured
+    if (!process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_API_KEY === 'placeholder' || 
+        !process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 'placeholder') {
+      return NextResponse.json({
+        message: "Sorry, the chatbot is currently experiencing technical difficulties. This is likely because the API keys have not been properly configured in the deployment environment. Please contact us directly at info@gehire.net or 0408 851 525 to speak with our team.",
+        bookingStep: 'error',
+        bookingData: {},
+      });
+    }
+    
     const { messages, bookingData, bookingStep } = await request.json();
     
     // Determine if we need to update the booking step
