@@ -15,6 +15,8 @@ export interface BookingData {
   phone?: string;
   category?: string;
   equipment?: string;
+  isExcavator?: boolean;
+  attachments?: string[];
   startDate?: string;
   endDate?: string;
   deliveryOption?: 'delivery' | 'pickup';

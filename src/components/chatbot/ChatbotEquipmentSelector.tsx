@@ -80,10 +80,18 @@ const ChatbotEquipmentSelector: React.FC = () => {
   const handleEquipmentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newEquipment = e.target.value;
     setEquipment(newEquipment);
-    updateBookingData({ equipment: newEquipment });
     
     // Find the selected equipment label
     const selectedEquipment = equipmentItems.find(item => item.value === newEquipment);
+    
+    // Check if it's an excavator
+    const isExcavator = category === 'excavators';
+    
+    // Update booking data
+    updateBookingData({ 
+      equipment: newEquipment,
+      isExcavator: isExcavator
+    });
     
     // Send a message to the chat with the selection
     if (selectedEquipment) {

@@ -12,7 +12,8 @@ const ChatbotDialog: React.FC = () => {
     messages, 
     sendMessage, 
     isLoading,
-    bookingStep
+    bookingStep,
+    bookingData
   } = useChat();
   
   const [inputValue, setInputValue] = useState('');
@@ -105,8 +106,8 @@ const ChatbotDialog: React.FC = () => {
           </div>
         )}
         
-        {/* Show equipment selector if in equipment selection step */}
-        {bookingStep === 'equipment-selection' && (
+        {/* Show equipment selector if in equipment selection step and no equipment is selected yet */}
+        {bookingStep === 'equipment-selection' && !bookingData.equipment && (
           <div className="mt-4">
             <ChatbotEquipmentSelector />
           </div>

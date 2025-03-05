@@ -19,12 +19,15 @@ IMPORTANT GUIDELINES:
 3. If you don't know an answer, don't make it up. Instead, suggest they contact us directly at info@gehire.net or call 0408 851 525.
 4. Be friendly, professional, and helpful at all times.
 5. Encourage customers to book equipment when appropriate.
+6. Ask only ONE question at a time - never ask multiple questions in a single message.
+7. When a customer selects an excavator, always ask if they need any attachments.
+8. Only excavators can use attachments - other equipment types don't have attachments.
 
 EQUIPMENT INFORMATION:
 We offer the following categories of equipment:
 - Excavators (1.7t to 13t)
 - Skid Steer Loaders
-- Attachments
+- Attachments (only compatible with excavators)
 - Compaction Equipment
 - Concrete Equipment
 - Tipper Trucks
@@ -33,11 +36,20 @@ We offer the following categories of equipment:
 
 BOOKING PROCESS:
 1. Help customers select the right equipment for their needs
-2. Collect their contact information (name, email, phone)
-3. Get their rental dates and delivery preferences
-4. Confirm their booking details
+   - If they select an excavator, ask if they need any attachments
+2. Collect their contact information one piece at a time:
+   - First ask for their name
+   - Then ask for their email
+   - Then ask for their phone number
+3. Get their rental dates one at a time:
+   - First ask for the start date
+   - Then ask for the end date
+4. Ask about delivery preferences:
+   - Ask if they want delivery or pickup
+   - If delivery, ask for the delivery address
+5. Confirm their booking details
 
-When a customer is ready to book, guide them through the process step by step.`;
+When a customer is ready to book, guide them through the process step by step, asking only ONE question at a time.`;
 
 // Helper function to determine the next booking step
 function determineBookingStep(messages: any[], currentStep: string, bookingData: any) {
@@ -133,6 +145,42 @@ function extractBookingData(messages: any[], currentData: any) {
     newData.deliveryAddress = addressMatch[1].trim();
   }
   
+  // Extract attachment information for excavators
+  if (newData.isExcavator && !newData.attachments) {
+    // Check if the user wants attachments
+    if (lastUserMessage.includes('yes') || 
+        lastUserMessage.includes('need attachment') || 
+        lastUserMessage.includes('want attachment')) {
+      // Initialize attachments array
+      newData.attachments = [];
+      
+      // Check for specific attachments
+      if (lastUserMessage.includes('bucket') || lastUserMessage.includes('gummy')) {
+        newData.attachments.push('Gummy Bucket');
+      }
+      if (lastUserMessage.includes('grab') || lastUserMessage.includes('hydraulic grab')) {
+        newData.attachments.push('Hydraulic Grab');
+      }
+      if (lastUserMessage.includes('ripper') || lastUserMessage.includes('tyne')) {
+        newData.attachments.push('Ripper Tyne');
+      }
+      if (lastUserMessage.includes('auger')) {
+        newData.attachments.push('Auger');
+      }
+      
+      // If no specific attachments were mentioned but they want attachments
+      if (newData.attachments.length === 0 && 
+          (lastUserMessage.includes('yes') || lastUserMessage.includes('need'))) {
+        newData.attachments = ['Unspecified attachments'];
+      }
+    } else if (lastUserMessage.includes('no') || 
+               lastUserMessage.includes('don\'t need') || 
+               lastUserMessage.includes('do not need')) {
+      // User explicitly doesn't want attachments
+      newData.attachments = [];
+    }
+  }
+  
   return newData;
 }
 
@@ -195,36 +243,59 @@ export async function POST(request: NextRequest) {
       content: msg.content
     }));
     
-    // Add booking context to the messages
-    let contextMessage = '';
-    if (newBookingStep !== 'initial') {
-      contextMessage = `Current booking information:\n`;
-      if (newBookingData.category) contextMessage += `- Category: ${newBookingData.category}\n`;
-      if (newBookingData.equipment) contextMessage += `- Equipment: ${newBookingData.equipment}\n`;
-      if (newBookingData.name) contextMessage += `- Name: ${newBookingData.name}\n`;
-      if (newBookingData.email) contextMessage += `- Email: ${newBookingData.email}\n`;
-      if (newBookingData.phone) contextMessage += `- Phone: ${newBookingData.phone}\n`;
-      if (newBookingData.startDate) contextMessage += `- Start Date: ${newBookingData.startDate}\n`;
-      if (newBookingData.endDate) contextMessage += `- End Date: ${newBookingData.endDate}\n`;
-      if (newBookingData.deliveryOption) contextMessage += `- Delivery Option: ${newBookingData.deliveryOption}\n`;
-      if (newBookingData.deliveryAddress) contextMessage += `- Delivery Address: ${newBookingData.deliveryAddress}\n`;
-      
-      contextMessage += `\nCurrent booking step: ${newBookingStep}\n`;
-      
-      if (newBookingStep === 'equipment-selection') {
-        contextMessage += `\nGuide the user to select equipment. They can use the equipment selector that appears in the chat.\n`;
-      } else if (newBookingStep === 'contact-info') {
-        contextMessage += `\nAsk for the user's name, email, and phone number if not already provided.\n`;
-      } else if (newBookingStep === 'dates') {
-        contextMessage += `\nAsk for the rental start and end dates.\n`;
-      } else if (newBookingStep === 'delivery') {
-        contextMessage += `\nAsk if they want delivery or pickup. If delivery, ask for the delivery address.\n`;
-      } else if (newBookingStep === 'confirmation') {
-        contextMessage += `\nSummarize the booking details and ask for confirmation.\n`;
-      } else if (newBookingStep === 'completed') {
-        contextMessage += `\nThe booking is complete. Thank the user and let them know we'll be in touch shortly.${emailSent ? ' Mention that a confirmation email has been sent.' : ''}\n`;
-      }
+// Add booking context to the messages
+let contextMessage = '';
+if (newBookingStep !== 'initial') {
+  contextMessage = `Current booking information:\n`;
+  if (newBookingData.category) contextMessage += `- Category: ${newBookingData.category}\n`;
+  if (newBookingData.equipment) contextMessage += `- Equipment: ${newBookingData.equipment}\n`;
+  if (newBookingData.isExcavator) contextMessage += `- Is Excavator: Yes\n`;
+  if (newBookingData.attachments && newBookingData.attachments.length > 0) {
+    contextMessage += `- Attachments: ${newBookingData.attachments.join(', ')}\n`;
+  }
+  if (newBookingData.name) contextMessage += `- Name: ${newBookingData.name}\n`;
+  if (newBookingData.email) contextMessage += `- Email: ${newBookingData.email}\n`;
+  if (newBookingData.phone) contextMessage += `- Phone: ${newBookingData.phone}\n`;
+  if (newBookingData.startDate) contextMessage += `- Start Date: ${newBookingData.startDate}\n`;
+  if (newBookingData.endDate) contextMessage += `- End Date: ${newBookingData.endDate}\n`;
+  if (newBookingData.deliveryOption) contextMessage += `- Delivery Option: ${newBookingData.deliveryOption}\n`;
+  if (newBookingData.deliveryAddress) contextMessage += `- Delivery Address: ${newBookingData.deliveryAddress}\n`;
+  
+  contextMessage += `\nCurrent booking step: ${newBookingStep}\n`;
+  
+  if (newBookingStep === 'equipment-selection') {
+    contextMessage += `\nGuide the user to select equipment. They can use the equipment selector that appears in the chat.\n`;
+    
+    // If they've selected an excavator but haven't been asked about attachments yet
+    if (newBookingData.isExcavator && !newBookingData.attachments) {
+      contextMessage += `\nThe user has selected an excavator. Ask if they need any attachments for it.\n`;
     }
+  } else if (newBookingStep === 'contact-info') {
+    contextMessage += `\nAsk for the user's name, email, and phone number ONE AT A TIME. Don't ask for multiple pieces of information in a single message.\n`;
+    
+    if (!newBookingData.name) {
+      contextMessage += `\nFirst, ask for their name.\n`;
+    } else if (!newBookingData.email) {
+      contextMessage += `\nNow, ask for their email address.\n`;
+    } else if (!newBookingData.phone) {
+      contextMessage += `\nFinally, ask for their phone number.\n`;
+    }
+  } else if (newBookingStep === 'dates') {
+    contextMessage += `\nAsk for the rental dates ONE AT A TIME.\n`;
+    
+    if (!newBookingData.startDate) {
+      contextMessage += `\nFirst, ask for the start date.\n`;
+    } else if (!newBookingData.endDate) {
+      contextMessage += `\nNow, ask for the end date.\n`;
+    }
+  } else if (newBookingStep === 'delivery') {
+    contextMessage += `\nAsk if they want delivery or pickup. If delivery, ask for the delivery address.\n`;
+  } else if (newBookingStep === 'confirmation') {
+    contextMessage += `\nSummarize the booking details and ask for confirmation.\n`;
+  } else if (newBookingStep === 'completed') {
+    contextMessage += `\nThe booking is complete. Thank the user and let them know we'll be in touch shortly.${emailSent ? ' Mention that a confirmation email has been sent.' : ''}\n`;
+  }
+}
     
     // Get response from Claude
     const response = await anthropic.messages.create({
