@@ -10,10 +10,13 @@ The chatbot is a floating yellow bubble in the bottom-right corner of every page
 
 - Appears on all pages with a distinctive yellow bubble
 - Helps customers find the right equipment based on their project needs
-- Guides customers through the booking process
+- Guides customers through the booking process step-by-step (one question at a time)
+- Provides detailed options with brief benefits for similar equipment (augers, trucks)
+- Suggests appropriate attachments for excavators
 - Collects booking information and sends confirmation emails
-- Remembers conversation history between page navigations
+- Remembers conversation history between page navigations (expires after 24 hours)
 - Respects user preferences (stays closed if the user closes it)
+- Includes a "New Chat" button to start fresh conversations
 
 ## Technical Implementation
 
