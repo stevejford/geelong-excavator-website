@@ -1,6 +1,5 @@
 [build]
-  # Copy service worker file to build output to fix 404 errors
-  command = "npm run build && cp public/service-worker.js .next/"
+  command = "npm run build"
   publish = ".next"
 
 [build.environment]
@@ -29,5 +28,3 @@
   for = "/_next/static/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-
-# Service worker redirects have been removed to fix console errors
