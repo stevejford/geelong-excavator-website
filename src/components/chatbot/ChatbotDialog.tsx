@@ -63,39 +63,41 @@ const ChatbotDialog: React.FC = () => {
       border border-gray-200
     ">
       {/* Header */}
-      <div className="bg-yellow-400 p-4 rounded-t-lg flex justify-between items-center">
-        <div className="flex items-center flex-grow">
-          {/* Avatar */}
-          <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center mr-3 overflow-hidden">
-            <img 
-              src="/images/logo2.webp" 
-              alt="Geelong Excavator Hire" 
-              className="w-8 h-8 object-contain"
-            />
-          </div>
+      <div className="bg-yellow-400 p-4 rounded-t-lg flex items-center">
+        {/* Avatar */}
+        <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center mr-3 overflow-hidden">
+          <img 
+            src="/images/logo2.webp" 
+            alt="Geelong Excavator Hire" 
+            className="w-8 h-8 object-contain"
+          />
+        </div>
+        
+        {/* Title and close button in one container */}
+        <div className="flex items-center justify-between flex-grow">
           {/* Title - nowrap to keep on one line */}
           <h3 className="font-bold text-gray-800 whitespace-nowrap">Equipment Assistant</h3>
-        </div>
-        <button 
-          onClick={handleClose}
-          aria-label="Close chat"
-          className="ml-2 flex-shrink-0 text-gray-800 hover:text-gray-600 transition-colors"
-        >
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            className="h-6 w-6" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            stroke="currentColor"
+          
+          {/* Close button */}
+          <button 
+            onClick={handleClose}
+            aria-label="Close chat"
+            className="ml-3 flex items-center justify-center w-8 h-8 rounded-full bg-white text-gray-800 hover:bg-gray-100 transition-colors"
           >
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              strokeWidth={2} 
-              d="M6 18L18 6M6 6l12 12" 
-            />
-          </svg>
-        </button>
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-5 w-5" 
+              viewBox="0 0 20 20" 
+              fill="currentColor"
+            >
+              <path 
+                fillRule="evenodd" 
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" 
+                clipRule="evenodd" 
+              />
+            </svg>
+          </button>
+        </div>
       </div>
       
       {/* Messages */}
