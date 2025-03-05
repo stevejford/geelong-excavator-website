@@ -64,7 +64,7 @@ const ChatbotDialog: React.FC = () => {
     ">
       {/* Header */}
       <div className="bg-yellow-400 p-4 rounded-t-lg flex justify-between items-center">
-        <div className="flex items-center">
+        <div className="flex items-center flex-grow">
           {/* Avatar */}
           <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center mr-3 overflow-hidden">
             <img 
@@ -79,11 +79,11 @@ const ChatbotDialog: React.FC = () => {
         <button 
           onClick={handleClose}
           aria-label="Close chat"
-          className="flex items-center text-gray-800 hover:text-gray-600 transition-colors bg-white rounded-lg px-3 py-1"
+          className="ml-2 flex-shrink-0 text-gray-800 hover:text-gray-600 transition-colors"
         >
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
-            className="h-4 w-4 mr-1" 
+            className="h-6 w-6" 
             fill="none" 
             viewBox="0 0 24 24" 
             stroke="currentColor"
@@ -95,7 +95,6 @@ const ChatbotDialog: React.FC = () => {
               d="M6 18L18 6M6 6l12 12" 
             />
           </svg>
-          <span className="text-sm">Close</span>
         </button>
       </div>
       
