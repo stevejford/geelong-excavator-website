@@ -13,7 +13,8 @@ const ChatbotDialog: React.FC = () => {
     sendMessage, 
     isLoading,
     bookingStep,
-    bookingData
+    bookingData,
+    startNewChat
   } = useChat();
   
   const [inputValue, setInputValue] = useState('');
@@ -65,26 +66,49 @@ const ChatbotDialog: React.FC = () => {
       {/* Header */}
       <div className="bg-yellow-400 p-4 rounded-t-lg flex justify-between items-center">
         <h3 className="font-bold text-gray-800">Equipment Assistant</h3>
-        <button 
-          onClick={handleClose}
-          aria-label="Close chat"
-          className="text-gray-800 hover:text-gray-600 transition-colors"
-        >
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            className="h-5 w-5" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            stroke="currentColor"
+        <div className="flex items-center space-x-2">
+          <button 
+            onClick={startNewChat}
+            aria-label="Start new chat"
+            className="text-gray-800 hover:text-gray-600 transition-colors bg-white rounded-full p-1"
+            title="Start new chat"
           >
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              strokeWidth={2} 
-              d="M6 18L18 6M6 6l12 12" 
-            />
-          </svg>
-        </button>
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-5 w-5" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M12 4v16m8-8H4" 
+              />
+            </svg>
+          </button>
+          <button 
+            onClick={handleClose}
+            aria-label="Close chat"
+            className="text-gray-800 hover:text-gray-600 transition-colors"
+          >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-5 w-5" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M6 18L18 6M6 6l12 12" 
+              />
+            </svg>
+          </button>
+        </div>
       </div>
       
       {/* Messages */}

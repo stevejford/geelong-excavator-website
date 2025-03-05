@@ -39,6 +39,7 @@ interface ChatContextType {
   hasUnreadMessages: boolean;
   setHasUnreadMessages: (hasUnread: boolean) => void;
   sendMessage: (content: string) => Promise<void>;
+  startNewChat: () => void;
 }
 
 // Create the context
@@ -53,29 +54,62 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [bookingStep, setBookingStep] = useState('initial');
   const [hasUnreadMessages, setHasUnreadMessages] = useState(false);
 
+  // Function to start a new chat
+  const startNewChat = () => {
+    // Clear messages and set initial welcome message
+    const initialMessages: ChatMessage[] = [
+      {
+        role: 'assistant',
+        content: 'Hi there! 👋 I\'m your equipment assistant. I can help you find the right equipment for your project and assist with bookings. How can I help you today?'
+      }
+    ];
+    setMessages(initialMessages);
+    localStorage.setItem('chatMessages', JSON.stringify(initialMessages));
+    
+    // Clear booking data
+    setBookingData({});
+    localStorage.removeItem('chatbotBookingData');
+    
+    // Reset booking step
+    setBookingStep('initial');
+    localStorage.setItem('chatbotBookingStep', 'initial');
+    
+    // Set new timestamp
+    const now = new Date().getTime();
+    localStorage.setItem('chatTimestamp', now.toString());
+  };
+
   // Initialize chat on first load
   useEffect(() => {
     // Check if the user has closed the chatbot before
     const chatbotClosed = localStorage.getItem('chatbotClosed') === 'true';
     
-    // Load saved messages from localStorage
-    const savedMessages = localStorage.getItem('chatMessages');
-    if (savedMessages) {
-      setMessages(JSON.parse(savedMessages));
-    } else {
-      // Initial welcome message
-      setMessages([
-        {
-          role: 'assistant',
-          content: 'Hi there! 👋 I\'m your equipment assistant. I can help you find the right equipment for your project and assist with bookings. How can I help you today?'
-        }
-      ]);
-    }
+    // Check if chat has expired (older than 24 hours)
+    const chatTimestamp = localStorage.getItem('chatTimestamp');
+    const now = new Date().getTime();
+    const isExpired = !chatTimestamp || (now - parseInt(chatTimestamp)) > 24 * 60 * 60 * 1000;
     
-    // Load saved booking data
-    const savedBookingData = localStorage.getItem('chatbotBookingData');
-    if (savedBookingData) {
-      setBookingData(JSON.parse(savedBookingData));
+    if (isExpired) {
+      // If chat is expired, start a new chat
+      startNewChat();
+    } else {
+      // Load saved messages from localStorage
+      const savedMessages = localStorage.getItem('chatMessages');
+      if (savedMessages) {
+        setMessages(JSON.parse(savedMessages));
+      }
+      
+      // Load saved booking data
+      const savedBookingData = localStorage.getItem('chatbotBookingData');
+      if (savedBookingData) {
+        setBookingData(JSON.parse(savedBookingData));
+      }
+      
+      // Load saved booking step
+      const savedBookingStep = localStorage.getItem('chatbotBookingStep');
+      if (savedBookingStep) {
+        setBookingStep(savedBookingStep);
+      }
     }
     
     // Open the chatbot automatically on first visit
@@ -93,6 +127,10 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   useEffect(() => {
     if (messages.length > 0) {
       localStorage.setItem('chatMessages', JSON.stringify(messages));
+      
+      // Update timestamp when messages change
+      const now = new Date().getTime();
+      localStorage.setItem('chatTimestamp', now.toString());
     }
   }, [messages]);
 
@@ -102,6 +140,11 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       localStorage.setItem('chatbotBookingData', JSON.stringify(bookingData));
     }
   }, [bookingData]);
+  
+  // Save booking step to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem('chatbotBookingStep', bookingStep);
+  }, [bookingStep]);
 
   // Add a new message to the chat
   const addMessage = (message: ChatMessage) => {
@@ -191,6 +234,7 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         hasUnreadMessages,
         setHasUnreadMessages,
         sendMessage,
+        startNewChat,
       }}
     >
       {children}
