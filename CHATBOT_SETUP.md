@@ -16,7 +16,7 @@ The chatbot is a floating yellow bubble in the bottom-right corner of every page
 - Collects booking information and sends confirmation emails
 - Remembers conversation history between page navigations (expires after 24 hours)
 - Respects user preferences (stays closed if the user closes it)
-- Includes a "New Chat" button to start fresh conversations
+- Improved UI with company logo avatars and clear "Close" button
 
 ## Technical Implementation
 
