@@ -22,6 +22,8 @@ IMPORTANT GUIDELINES:
 6. Ask only ONE question at a time - never ask multiple questions in a single message.
 7. When a customer selects an excavator, always ask if they need any attachments.
 8. Only excavators can use attachments - other equipment types don't have attachments.
+9. Always provide specific options with brief benefits when customers need to choose between similar items.
+10. Keep explanations concise but informative.
 
 EQUIPMENT INFORMATION:
 We offer the following categories of equipment:
@@ -34,9 +36,31 @@ We offer the following categories of equipment:
 - Non-Destructive Excavation
 - Augers & Rock Breakers
 
+DETAILED EQUIPMENT OPTIONS:
+
+AUGERS (for excavators):
+- 150mm Auger: Perfect for small post holes and tight spaces
+- 200mm Auger: Ideal for standard fence posts and small footings
+- 250mm Auger: Great for medium footings and larger posts
+- 300mm Auger: Best for substantial footings and large posts
+- 350mm Auger: Excellent for wide footings and large structural posts
+- 450mm Auger: For major footings and large-diameter holes
+
+TIPPER TRUCKS:
+- Car Licence Tipper: Can be driven with a standard car license, perfect for smaller jobs and easier to maneuver
+- Isuzu FRR500 Tipper (6t Med Rigid): Requires a truck license, larger capacity for bigger jobs and heavier loads
+
+ATTACHMENTS FOR EXCAVATORS:
+- Gummy Services Bucket (No Teeth): Ideal for clean-up work and working near utilities
+- Hydraulic Grab: Perfect for lifting and moving large objects or debris
+- Pressure Washer: Great for cleaning surfaces or preparing areas
+- Ripper Tyne: Excellent for breaking up hard soil or compacted materials
+
 BOOKING PROCESS:
 1. Help customers select the right equipment for their needs
    - If they select an excavator, ask if they need any attachments
+   - If they mention augers, ask which size they need (provide options)
+   - If they mention trucks, explain the license requirements and capacity differences
 2. Collect their contact information one piece at a time:
    - First ask for their name
    - Then ask for their email
@@ -145,6 +169,23 @@ function extractBookingData(messages: any[], currentData: any) {
     newData.deliveryAddress = addressMatch[1].trim();
   }
   
+  // Extract truck type information
+  if (lastUserMessage.includes('truck') || lastUserMessage.includes('tipper')) {
+    if (lastUserMessage.includes('car licence') || 
+        lastUserMessage.includes('car license') || 
+        lastUserMessage.includes('standard licence') || 
+        lastUserMessage.includes('standard license')) {
+      newData.truckType = 'Car Licence Tipper';
+    } else if (lastUserMessage.includes('isuzu') || 
+               lastUserMessage.includes('frr500') || 
+               lastUserMessage.includes('6t') || 
+               lastUserMessage.includes('truck licence') || 
+               lastUserMessage.includes('truck license') || 
+               lastUserMessage.includes('heavy vehicle')) {
+      newData.truckType = 'Isuzu FRR500 Tipper (6t Med Rigid)';
+    }
+  }
+  
   // Extract attachment information for excavators
   if (newData.isExcavator && !newData.attachments) {
     // Check if the user wants attachments
@@ -164,8 +205,25 @@ function extractBookingData(messages: any[], currentData: any) {
       if (lastUserMessage.includes('ripper') || lastUserMessage.includes('tyne')) {
         newData.attachments.push('Ripper Tyne');
       }
+      
+      // Check for specific auger sizes
       if (lastUserMessage.includes('auger')) {
-        newData.attachments.push('Auger');
+        if (lastUserMessage.includes('150mm') || lastUserMessage.includes('150 mm')) {
+          newData.attachments.push('Auger 150mm');
+        } else if (lastUserMessage.includes('200mm') || lastUserMessage.includes('200 mm')) {
+          newData.attachments.push('Auger 200mm');
+        } else if (lastUserMessage.includes('250mm') || lastUserMessage.includes('250 mm')) {
+          newData.attachments.push('Auger 250mm');
+        } else if (lastUserMessage.includes('300mm') || lastUserMessage.includes('300 mm')) {
+          newData.attachments.push('Auger 300mm');
+        } else if (lastUserMessage.includes('350mm') || lastUserMessage.includes('350 mm')) {
+          newData.attachments.push('Auger 350mm');
+        } else if (lastUserMessage.includes('450mm') || lastUserMessage.includes('450 mm')) {
+          newData.attachments.push('Auger 450mm');
+        } else {
+          // If they just mention auger without a size
+          newData.attachments.push('Auger (size to be specified)');
+        }
       }
       
       // If no specific attachments were mentioned but they want attachments
@@ -200,6 +258,9 @@ async function sendBookingEmail(bookingData: any): Promise<boolean> {
         <p>Thank you for your equipment booking request. Here are the details:</p>
         <ul>
           <li><strong>Equipment:</strong> ${bookingData.equipment || 'Not specified'}</li>
+          ${bookingData.truckType ? `<li><strong>Truck Type:</strong> ${bookingData.truckType}</li>` : ''}
+          ${bookingData.attachments && bookingData.attachments.length > 0 ? 
+            `<li><strong>Attachments:</strong> ${bookingData.attachments.join(', ')}</li>` : ''}
           <li><strong>Start Date:</strong> ${bookingData.startDate || 'Not specified'}</li>
           <li><strong>End Date:</strong> ${bookingData.endDate || 'Not specified'}</li>
           <li><strong>Delivery Option:</strong> ${bookingData.deliveryOption || 'Not specified'}</li>
@@ -253,6 +314,7 @@ if (newBookingStep !== 'initial') {
   if (newBookingData.attachments && newBookingData.attachments.length > 0) {
     contextMessage += `- Attachments: ${newBookingData.attachments.join(', ')}\n`;
   }
+  if (newBookingData.truckType) contextMessage += `- Truck Type: ${newBookingData.truckType}\n`;
   if (newBookingData.name) contextMessage += `- Name: ${newBookingData.name}\n`;
   if (newBookingData.email) contextMessage += `- Email: ${newBookingData.email}\n`;
   if (newBookingData.phone) contextMessage += `- Phone: ${newBookingData.phone}\n`;
