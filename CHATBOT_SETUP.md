@@ -49,8 +49,16 @@ The chatbot consists of the following components:
    ```
 
 3. **Deploy to Netlify**:
-   - Add the environment variables to your Netlify project settings
+   - Add the environment variables to your Netlify project settings:
+     1. Go to your Netlify site dashboard
+     2. Navigate to Site settings > Build & deploy > Environment
+     3. Add the following environment variables:
+        ```
+        ANTHROPIC_API_KEY=your_anthropic_api_key
+        RESEND_API_KEY=your_resend_api_key
+        ```
    - Deploy the site as usual
+   - Note: The chatbot will not work in production without these environment variables properly set
 
 ## Customization
 
