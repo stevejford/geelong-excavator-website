@@ -6,10 +6,8 @@
 [build.environment]
   NETLIFY_NEXT_PLUGIN_SKIP = "false"
   NODE_VERSION = "18"
-  # Note: Do not put actual API keys here. Add them in the Netlify dashboard.
-  # These are just placeholders to indicate which variables are needed.
-  ANTHROPIC_API_KEY = "placeholder"
-  RESEND_API_KEY = "placeholder"
+  # Environment variables should be set in the Netlify dashboard
+  # Do not put actual API keys in this file or in the code
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
