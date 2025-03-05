@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
+import Chatbot from "@/components/chatbot/Chatbot";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -77,6 +78,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <ServiceWorkerRegistration />
+        <Chatbot />
       </body>
     </html>
   );
