@@ -4,7 +4,7 @@ import { Resend } from 'resend';
 
 // Initialize Anthropic client
 const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY || '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',
+  apiKey: process.env.ANTHROPIC_API_KEY || '',
 });
 
 // Initialize Resend client
