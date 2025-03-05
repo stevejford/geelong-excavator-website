@@ -42,7 +42,7 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   
-  // Enable static page generation optimization
+  // Enable server-side rendering
   output: 'standalone',
 }
 
