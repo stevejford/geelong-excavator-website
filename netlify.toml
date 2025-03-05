@@ -1,4 +1,5 @@
 [build]
+  # Copy service worker file to build output to fix 404 errors
   command = "npm run build && cp public/service-worker.js .next/"
   publish = ".next"
 
